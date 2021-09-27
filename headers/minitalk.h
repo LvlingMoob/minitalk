@@ -20,19 +20,13 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-typedef struct s_server
-{
-	char	*arg2;
-	int		pid;
-	int		checker;
-}				t_server;
+char	*g_arg2;
 
-t_server	g_data;
-
+void	prog_end(void);
 char	*ft_strdup(char *src);
 void	*ft_calloc(int nmemb, int size);
 int		ft_atoi(const char *str);
-int		ft_parsing(int argc, char *argv);
+int		ft_parsing(char *argv, int pid);
 void	ft_putnbr(long int nbr);
 
 #endif

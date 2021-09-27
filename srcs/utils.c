@@ -12,6 +12,12 @@
 
 #include "minitalk.h"
 
+void	prog_end(void)
+{
+	free(g_arg2);
+	exit(0);
+}
+
 void	ft_putchar(char c)
 {
 	write(1, &c, 1);
@@ -36,25 +42,24 @@ int	ft_isdigit(int c)
 	return (0);
 }
 
-int	ft_parsing(int argc, char *argv)
+int	ft_parsing(char *argv, int pid)
 {
 	int	i;
 
 	i = 0;
-	if (argc != 3)
-	{
-		write(1, "need 2 arguments: (PID) (TEXT)\n", 31);
-		return (0);
-	}
 	while (argv[i])
 	{
 		if (!ft_isdigit((int)argv[i]))
 		{
 			write(1, "Error PID\n", 10);
-			return (0);
+			prog_end();
 		}
 		i++;
 	}
-	g_data.checker = 0;
+	if (kill(pid, 0) != 0)
+	{
+		write(1, "BAD PID\n", 8);
+		prog_end();
+	}
 	return (1);
 }

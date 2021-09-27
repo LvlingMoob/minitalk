@@ -39,7 +39,7 @@ void	sig_dealer(int sign, siginfo_t *info, void *context)
 {
 	(void)context;
 	char_handler(sign);
-	usleep(50);
+	usleep(30);
 	kill(info->si_pid, SIGUSR2);
 }
 
