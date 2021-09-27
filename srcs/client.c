@@ -12,6 +12,12 @@
 
 #include "minitalk.h"
 
+void	prog_end(void)
+{
+	free(g_arg2);
+	exit(0);
+}
+
 void	char_dealer(int pid)
 {
 	static int	pos = 0;
@@ -43,9 +49,32 @@ void	char_dealer(int pid)
 void	sig_dealer(int sign, siginfo_t *info, void *context)
 {
 	(void)context;
-	usleep(50);
+	usleep(100);
 	if (sign == SIGUSR2)
 		char_dealer(info->si_pid);
+}
+
+int	ft_parsing(char *argv, int *pid)
+{
+	int	i;
+
+	i = 0;
+	while (argv[i])
+	{
+		if (!ft_isdigit((int)argv[i]))
+		{
+			write(1, "Error PID\n", 10);
+			prog_end();
+		}
+		i++;
+	}
+	*pid = ft_atoi(argv);
+	if (kill(*pid, 0) != 0)
+	{
+		write(1, "BAD PID\n", 8);
+		prog_end();
+	}
+	return (1);
 }
 
 int	main(int argc, char **argv)
@@ -58,9 +87,8 @@ int	main(int argc, char **argv)
 	sigaction(SIGUSR2, &sig, NULL);
 	if (argc == 3)
 	{
-		pid = ft_atoi(argv[1]);
 		g_arg2 = ft_strdup(argv[2]);
-		if (ft_parsing(argv[1], pid))
+		if (ft_parsing(argv[1], &pid))
 		{
 			char_dealer(pid);
 			while (1)
@@ -70,7 +98,7 @@ int	main(int argc, char **argv)
 	else
 	{
 		write(1, "need 2 arguments: (PID) (TEXT)\n", 31);
-		prog_end();
+		return (1);
 	}
 	return (0);
 }

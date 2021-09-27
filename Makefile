@@ -29,11 +29,10 @@ RM			= rm -f
 FLAGS		= -c -Wall -Wextra -Werror
 
 SRCSERV		=	${SRCSFILE}server.c \
-				${SRCSFILE}utils.c \
-
-SRCLT		=	${SRCSFILE}client.c \
 				${SRCSFILE}minilibft.c \
-				${SRCSFILE}utils.c \
+
+SRCLT		=	${SRCSFILE}minilibft.c \
+				${SRCSFILE}client.c \
 
 
 all: client server

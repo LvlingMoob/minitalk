@@ -26,7 +26,8 @@ void	prog_end(void);
 char	*ft_strdup(char *src);
 void	*ft_calloc(int nmemb, int size);
 int		ft_atoi(const char *str);
-int		ft_parsing(char *argv, int pid);
+int		ft_parsing(char *argv, int *pid);
 void	ft_putnbr(long int nbr);
+int		ft_isdigit(int c);
 
 #endif

@@ -12,6 +12,50 @@
 
 #include "minitalk.h"
 
+void	ft_putchar(char c)
+{
+	write(1, &c, 1);
+}
+
+int	ft_isdigit(int c)
+{
+	if (c >= 48 && c <= 57)
+		return (1);
+	return (0);
+}
+
+void	ft_putnbr(long int nbr)
+{
+	if (nbr < 0)
+	{
+		nbr = -nbr;
+		ft_putchar('-');
+	}
+	if (nbr / 10)
+		ft_putnbr(nbr / 10);
+	ft_putchar((nbr % 10) + '0');
+}
+
+char	*ft_strdup(char *src)
+{
+	int		i;
+	int		len;
+	char	*str;
+
+	len = 0;
+	while (src[len])
+		len++;
+	str = (char *)malloc(sizeof(char) * (len + 1));
+	i = 0;
+	while (i < len)
+	{
+		str[i] = src[i];
+		i++;
+	}
+	str[i] = 0;
+	return (str);
+}
+
 int	ft_atoi(const char *str)
 {
 	long int	nbr;
@@ -37,52 +81,4 @@ int	ft_atoi(const char *str)
 	}
 	nbr *= neg;
 	return (nbr);
-}
-
-int	ft_strlen(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
-
-void	*ft_memset(void *s, int c, int n)
-{
-	int		i;
-	char	*ptr;
-
-	i = 0;
-	ptr = (char *)s;
-	while (i < n)
-		ptr[i++] = c;
-	return (s);
-}
-
-void	*ft_calloc(int nmemb, int size)
-{
-	void	*new;
-
-	new = malloc(nmemb * size);
-	ft_memset(new, 0, nmemb * size);
-	return (new);
-}
-
-char	*ft_strdup(char *src)
-{
-	int		i;
-	int		len;
-	char	*str;
-
-	len = ft_strlen(src);
-	str = (char *)ft_calloc(sizeof(char), len + 1);
-	i = 0;
-	while (i < len)
-	{
-		str[i] = src[i];
-		i++;
-	}
-	return (str);
 }
