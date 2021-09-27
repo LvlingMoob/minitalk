@@ -22,7 +22,7 @@
 
 char	*g_arg2;
 
-void	prog_end(void);
+void	prog_end(int err);
 char	*ft_strdup(char *src);
 void	*ft_calloc(int nmemb, int size);
 int		ft_atoi(const char *str);

@@ -12,10 +12,10 @@
 
 #include "minitalk.h"
 
-void	prog_end(void)
+void	prog_end(int err)
 {
 	free(g_arg2);
-	exit(0);
+	exit(err);
 }
 
 void	char_dealer(int pid)
@@ -28,12 +28,12 @@ void	char_dealer(int pid)
 		if ((g_arg2[pos] >> i) & 1)
 		{	
 			if (kill(pid, SIGUSR1) == -1)
-				prog_end();
+				prog_end(1);
 		}
 		else
 		{	
 			if (kill(pid, SIGUSR2) == -1)
-				prog_end();
+				prog_end(1);
 		}
 		i++;
 		if (i == 8)
@@ -43,7 +43,7 @@ void	char_dealer(int pid)
 		}
 	}
 	else
-		prog_end();
+		prog_end(0);
 }
 
 void	sig_dealer(int sign, siginfo_t *info, void *context)
@@ -64,7 +64,7 @@ int	ft_parsing(char *argv, int *pid)
 		if (!ft_isdigit((int)argv[i]))
 		{
 			write(1, "Error PID\n", 10);
-			prog_end();
+			prog_end(1);
 		}
 		i++;
 	}
@@ -72,7 +72,7 @@ int	ft_parsing(char *argv, int *pid)
 	if (kill(*pid, 0) != 0)
 	{
 		write(1, "BAD PID\n", 8);
-		prog_end();
+		prog_end(1);
 	}
 	return (1);
 }
