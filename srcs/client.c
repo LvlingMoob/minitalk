@@ -22,12 +22,12 @@ void	char_dealer(int pid)
 		if ((g_arg2[pos] >> i) & 1)
 		{	
 			if (kill(pid, SIGUSR1) == -1)
-				return ;
+				prog_end();
 		}
 		else
 		{	
 			if (kill(pid, SIGUSR2) == -1)
-				return ;
+				prog_end();
 		}
 		i++;
 		if (i == 8)
@@ -43,7 +43,7 @@ void	char_dealer(int pid)
 void	sig_dealer(int sign, siginfo_t *info, void *context)
 {
 	(void)context;
-	usleep(30);
+	usleep(50);
 	if (sign == SIGUSR2)
 		char_dealer(info->si_pid);
 }
