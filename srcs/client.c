@@ -70,7 +70,7 @@ int	main(int argc, char **argv)
 	else
 	{
 		write(1, "need 2 arguments: (PID) (TEXT)\n", 31);
-		return (1);
+		prog_end();
 	}
 	return (0);
 }
